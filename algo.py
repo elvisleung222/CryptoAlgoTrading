@@ -142,7 +142,7 @@ def sell_asset_to_usdt(symbol, quantity):
 def btcusdt_tick_handler(msg):
     """ define how to process incoming WebSocket messages """
     if msg['e'] != 'error':
-        print(msg['c'])
+        # print(msg['c'])
         btc_price['last'] = msg['c']
         btc_price['bid'] = msg['b']
         btc_price['last'] = msg['a']
@@ -164,9 +164,9 @@ if __name__ == "__main__":
     tg_thread = threading.Thread(target=tg_bot_polling)
     tg_thread.start()
 
-    bsm = BinanceSocketManager(binance_client)
-    conn_key = bsm.start_symbol_ticker_socket('BTCUSDT', btcusdt_tick_handler)
-    bsm.start()
+    # bsm = BinanceSocketManager(binance_client)
+    # conn_key = bsm.start_symbol_ticker_socket('BTCUSDT', btcusdt_tick_handler)
+    # bsm.start()
 
     # Handle system signals
     signal.signal(signal.SIGINT, gracfully_close_handler)
