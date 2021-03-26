@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c2463f17-bfa3-4697-b16f-e860190e5aa8" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1qHfwux3NMoKkPkjKhQtTyYVZ5Y" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="restartRequiresConfirmation" value="false" />
+  </component>
+  <component name="RunManager" selected="Python.algo">
+    <configuration name="algo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="BinanceAlgoTrading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tgBot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="BinanceAlgoTrading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tgBot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.algo" />
+        <item itemvalue="Python.tgBot" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c2463f17-bfa3-4697-b16f-e860190e5aa8" name="Default Changelist" comment="" />
+      <created>1616741677153</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1616741677153</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="485" y="297" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog" timestamp="1616742372103">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="485" y="297" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog/0.0.1280.800@0.0.1280.800" timestamp="1616742372103" />
+    <state width="1259" height="305" key="GridCell.Tab.0.bottom" timestamp="1616769720430">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1259" height="202" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1616757279766" />
+    <state width="1259" height="305" key="GridCell.Tab.0.bottom/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616769720430" />
+    <state width="1259" height="305" key="GridCell.Tab.0.center" timestamp="1616769720416">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1259" height="202" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1616757279765" />
+    <state width="1259" height="305" key="GridCell.Tab.0.center/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616769720416" />
+    <state width="1259" height="305" key="GridCell.Tab.0.left" timestamp="1616769720415">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1259" height="202" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1616757279764" />
+    <state width="1259" height="305" key="GridCell.Tab.0.left/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616769720415" />
+    <state width="1259" height="305" key="GridCell.Tab.0.right" timestamp="1616769720417">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1259" height="202" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1616757279766" />
+    <state width="1259" height="305" key="GridCell.Tab.0.right/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616769720417" />
+  </component>
+</project>
