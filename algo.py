@@ -218,7 +218,7 @@ if __name__ == "__main__":
     print(kline)
     print_balance_btc_usdt()
 
-    # Thread 1: polling telegram commands
+    """ Thread 1: polling telegram commands """
     tg_thread = threading.Thread(target=tg_bot_polling)
     tg_thread.start()
 
