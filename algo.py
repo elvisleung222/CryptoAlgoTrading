@@ -18,11 +18,11 @@ from twisted.internet import reactor
 """
 Configurations
 """
+tg_notification_group_id = -427619077
+binance_api_endpoint = 'https://testnet.binance.vision/api'
 paper_api_key = 'zLIvCfgCOjjLFxIFVpTw9kdXDSTAdK9h3vZtwpSJ4YOY1kxpAjW1RagzBJ147qYV'
 paper_api_secret = 'n4FC7mYB4095D8c81Xn3XHmlDhImztFYXYqiexPziuX1hCsPLoeHAeCsq68EWhy5'
 telebot_token = '1785575987:AAFadtnwM8WCIAJ8Xxz7MgJs3ZhU0QOmXfc'
-tg_notification_group_id = -427619077
-binance_api_endpoint = 'https://testnet.binance.vision/api'
 
 """
 Initialization
@@ -45,29 +45,32 @@ Telegram bot commands
 """
 
 
-def test_10s():
-    print('Scheduled job executed')
-
-
 def tg_bot_polling():
     tg_bot.polling()
 
 
+def notify(msg):
+    try:
+        tg_bot.send_message(tg_notification_group_id, msg)
+    except Exception as e:
+        print('Telegram Error: {}', e)
+
+
 @tg_bot.message_handler(commands=['balance'])
 def check_balance(message):
-    tg_bot.send_message(tg_notification_group_id, generate_balance_string())
+    notify(generate_balance_string())
 
 
 @tg_bot.message_handler(commands=['balance_btcusdt'])
 def check_balance_btcusdt(message):
-    tg_bot.send_message(tg_notification_group_id, generate_balance_string(['BTC', 'USDT']))
+    notify(generate_balance_string(['BTC', 'USDT']))
 
 
 @tg_bot.message_handler(commands=['trade'])
 def trade(message):
     args = message.text.split(' ')
     if len(args) != 4:
-        tg_bot.send_message(tg_notification_group_id, 'Syntax Error. /trade [symbol] [side] [qty]')
+        notify('Syntax Error. /trade [symbol] [side] [qty]')
         return
     try:
         symbol = args[1].upper()
@@ -81,14 +84,18 @@ def trade(message):
             order['origQty'],
             order['executedQty']
         )
-        tg_bot.send_message(tg_notification_group_id, str)
+        notify(str)
     except Exception as e:
-        tg_bot.send_message(tg_notification_group_id, 'Error: {}'.format(e))
+        notify('Error: {}'.format(e))
 
 
 """
 Functions
 """
+
+
+def test_10s():
+    print('Scheduled job executed')
 
 
 def run_scheduled_tasks():
