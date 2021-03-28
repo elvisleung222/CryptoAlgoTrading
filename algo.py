@@ -6,8 +6,11 @@ Guide - https://algotrading101.com/learn/binance-python-api-guide/
 import signal
 import sys
 import threading
-import telebot
+import time
+from datetime import datetime
 
+import schedule
+import telebot
 from binance.client import Client
 from binance.websockets import BinanceSocketManager
 from twisted.internet import reactor
@@ -33,6 +36,10 @@ conn_key = None
 """
 Telegram bot commands
 """
+
+
+def test_10s():
+    print('Scheduled job executed')
 
 
 def tg_bot_polling():
@@ -76,6 +83,13 @@ Functions
 """
 
 
+def run_scheduled_tasks():
+    while True:
+        schedule.run_pending()
+        time.sleep(60 * 60)  # 1 hour
+        # time.sleep(2)  # 2 seconds
+
+
 def trade(symbol, side, qty):
     order = binance_client.create_order(
         symbol=symbol,
@@ -94,7 +108,7 @@ def generate_balance_string(assets=None):
         if assets is not None and currency['asset'] not in assets:
             continue
         str += '{}: {}\n'.format(currency['asset'], currency['free'])
-    str += '******************************\n'
+    str += '******************************'
     return str
 
 
@@ -156,6 +170,14 @@ def gracfully_close_handler(signal, frame):
     print('Gracefully terminated.')
     sys.exit(0)
 
+
+def get_avg_close(binance_klines):
+    closes = [float(x[4]) for x in binance_klines]
+    for x in binance_klines:
+        ts = datetime.fromtimestamp(x[0] / 1000)
+        print(ts)
+    print(closes)
+    return sum(closes) / len(closes)
 
 if __name__ == "__main__":
     print_balance_btc_usdt()
