@@ -34,6 +34,13 @@ btc_price = {'error': False}
 conn_key = None
 
 """
+Application params
+"""
+is_data_stream_on = True
+is_print_stream_value = True
+is_schedule_tasks_on = True
+
+"""
 Telegram bot commands
 """
 
@@ -44,6 +51,7 @@ def test_10s():
 
 def tg_bot_polling():
     tg_bot.polling()
+
 
 @tg_bot.message_handler(commands=['balance'])
 def check_balance(message):
@@ -156,7 +164,8 @@ def sell_asset_to_usdt(symbol, quantity):
 def btcusdt_tick_handler(msg):
     """ define how to process incoming WebSocket messages """
     if msg['e'] != 'error':
-        # print(msg['c'])
+        if is_print_stream_value:
+            print(msg['c'])
         btc_price['last'] = msg['c']
         btc_price['bid'] = msg['b']
         btc_price['last'] = msg['a']
@@ -179,16 +188,53 @@ def get_avg_close(binance_klines):
     print(closes)
     return sum(closes) / len(closes)
 
+
+def init_params(args):
+    global is_data_stream_on
+    global is_print_stream_value
+    global is_schedule_tasks_on
+
+    TRUE_ALIAS = ['TRUE', 'T', 'ON', 'Y', 'YES', 'ENABLED', 'ENABLE']
+    for arg in args:
+        if '--data-stream' in arg:
+            val = arg[1].upper()
+            if val not in TRUE_ALIAS:
+                is_data_stream_on = False
+        elif '--stream-print' in arg:
+            val = arg[1].upper()
+            if val not in TRUE_ALIAS:
+                is_print_stream_value = False
+        elif '--schedule-task' in arg:
+            val = arg[1].upper()
+            if val not in TRUE_ALIAS:
+                is_schedule_tasks_on = False
+
+
 if __name__ == "__main__":
+    init_params(sys.argv[1:])
+    kline = binance_client.get_historical_klines('BTCUSDT', Client.KLINE_INTERVAL_1DAY, '10 day ago UTC')
+    # 10 day ago UTC
+    # '17 Mar, 2021', '27 Mar, 2021'
+    print(kline)
     print_balance_btc_usdt()
 
     # Thread 1: polling telegram commands
     tg_thread = threading.Thread(target=tg_bot_polling)
     tg_thread.start()
 
-    # bsm = BinanceSocketManager(binance_client)
-    # conn_key = bsm.start_symbol_ticker_socket('BTCUSDT', btcusdt_tick_handler)
-    # bsm.start()
+    """ Thread 2: running scheduled tasks """
+    if is_schedule_tasks_on:
+        # run them once at first to initialize data
+        test_10s()
+        # schedule.every().day.do(test_10s)
+        schedule.every().second.do(test_10s)
+        sch_thread = threading.Thread(target=run_scheduled_tasks)
+        sch_thread.start()
+
+    if is_data_stream_on:
+        bsm = BinanceSocketManager(binance_client)
+        conn_key = bsm.start_symbol_ticker_socket('BTCUSDT', btcusdt_tick_handler)
+        bsm.start()
 
     # Handle system signals
     signal.signal(signal.SIGINT, gracfully_close_handler)
