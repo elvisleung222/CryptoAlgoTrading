@@ -15,8 +15,8 @@ sudo pip install -r requirements.txt
 # OR
 sudo pip3 install -r requirements.txt
 
-sudo nohup python3 algo.py --data-stream=false --stream-print=false --schedule-task=false &
-tail -f nohup.txt
+sudo nohup python3 algo.py --data-stream=false --stream-print=false --schedule-task=false --telegram-bot=true &
+sudo tail -f nohup.txt
 ```
 
 ### Reference
