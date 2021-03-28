@@ -39,6 +39,7 @@ Application params
 is_data_stream_on = True
 is_print_stream_value = True
 is_schedule_tasks_on = True
+is_telegram_bot_on = True
 
 """
 Telegram bot commands
@@ -200,6 +201,7 @@ def init_params(args):
     global is_data_stream_on
     global is_print_stream_value
     global is_schedule_tasks_on
+    global is_telegram_bot_on
 
     TRUE_ALIAS = ['TRUE', 'T', 'ON', 'Y', 'YES', 'ENABLED', 'ENABLE']
     for arg in args:
@@ -215,6 +217,10 @@ def init_params(args):
             val = arg[1].upper()
             if val not in TRUE_ALIAS:
                 is_schedule_tasks_on = False
+        elif '--telegram-bot' in arg:
+            val = arg[1].upper()
+            if val not in TRUE_ALIAS:
+                is_telegram_bot_on = False
 
 
 if __name__ == "__main__":
@@ -226,8 +232,9 @@ if __name__ == "__main__":
     print_balance_btc_usdt()
 
     """ Thread 1: polling telegram commands """
-    tg_thread = threading.Thread(target=tg_bot_polling)
-    tg_thread.start()
+    if is_telegram_bot_on:
+        tg_thread = threading.Thread(target=tg_bot_polling)
+        tg_thread.start()
 
     """ Thread 2: running scheduled tasks """
     if is_schedule_tasks_on:
