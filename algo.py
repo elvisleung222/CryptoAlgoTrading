@@ -6,10 +6,9 @@ Guide - https://algotrading101.com/learn/binance-python-api-guide/
 import logging as log
 import signal
 import sys
-import threading
 import time
 from datetime import datetime
-from multiprocessing import Process
+from threading import Thread, Event
 
 import schedule
 import telebot
@@ -34,7 +33,6 @@ binance_client = Client(paper_api_key, paper_api_secret)
 binance_client.API_URL = binance_api_endpoint
 btc_price = {'error': False}
 conn_key = None
-running_processes = []
 log.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s', level=log.INFO)
 
 """
@@ -52,28 +50,34 @@ Telegram bot commands
 
 
 def tg_bot_polling():
+    log.info('Telegram bot polling started.')
     tg_bot.polling()
 
 
 def notify(msg):
     try:
-        tg_bot.send_message(tg_notification_group_id, msg)
+        api_reply = tg_bot.send_message(tg_notification_group_id, msg)
+        if api_reply is not None:
+            log.info('Reply sent.')
     except Exception as e:
-        print('Telegram Error: {}', e)
+        log.info('Telegram Error: {}'.format(e))
 
 
 @tg_bot.message_handler(commands=['balance'])
 def check_balance(message):
+    log.info('Received command: ' + message.text)
     notify(generate_balance_string())
 
 
 @tg_bot.message_handler(commands=['balance_btcusdt'])
 def check_balance_btcusdt(message):
+    log.info('Received command: ' + message.text)
     notify(generate_balance_string(['BTC', 'USDT']))
 
 
 @tg_bot.message_handler(commands=['trade'])
 def trade(message):
+    log.info('Received command: ' + message.text)
     args = message.text.split(' ')
     if len(args) != 4:
         notify('Syntax Error. /trade [symbol] [side] [qty]')
@@ -101,7 +105,7 @@ Functions
 
 
 def test_10s():
-    print('Scheduled job executed')
+    log.info('Scheduled job executed')
 
 
 def run_scheduled_tasks():
@@ -138,7 +142,7 @@ def print_balance_btc_usdt():
 
 
 def print_balance(assets=None):
-    print(generate_balance_string(assets))
+    log.info(generate_balance_string(assets))
 
 
 def sell_all_assets_to_usdt():
@@ -169,9 +173,9 @@ def sell_asset_to_usdt(symbol, quantity):
             side='SELL',
             type='MARKET',
             quantity=quantity)
-        print('Order Filled.')
+        log.info('Order Filled.')
     except Exception as e:
-        print('Error: Currency: {}, {}'.format(symbol, e))
+        log.info('Error: Currency: {}, {}'.format(symbol, e))
 
 
 def btcusdt_tick_handler(msg):
@@ -179,7 +183,7 @@ def btcusdt_tick_handler(msg):
     global app_args
     if msg['e'] != 'error':
         if app_args['is_print_stream_value']:
-            print(msg['c'])
+            log.info(msg['c'])
         btc_price['last'] = msg['c']
         btc_price['bid'] = msg['b']
         btc_price['last'] = msg['a']
@@ -191,12 +195,11 @@ def gracfully_close_handler(signal, frame):
     try:
         bsm.stop_socket(conn_key)  # stop websocket
         reactor.stop()  # properly terminate WebSocket
-        print('Gracefully terminated.')
+        log.info('Gracefully terminated.')
     except NameError:
-        print('Gracefully terminated. (Data stream socket is not started)')
+        log.info('Gracefully terminated, Data stream socket is not started.')
     finally:
-        for p in running_processes:
-            p.terminate()
+        log.info('Exit Application.')
         sys.exit(0)
 
 
@@ -204,8 +207,8 @@ def get_avg_close(binance_klines):
     closes = [float(x[4]) for x in binance_klines]
     for x in binance_klines:
         ts = datetime.fromtimestamp(x[0] / 1000)
-        print(ts)
-    print(closes)
+        log.info(ts)
+    log.info(closes)
     return sum(closes) / len(closes)
 
 
@@ -240,24 +243,23 @@ if __name__ == "__main__":
     kline = binance_client.get_historical_klines('BTCUSDT', Client.KLINE_INTERVAL_1DAY, '10 day ago UTC')
     # 10 day ago UTC
     # '17 Mar, 2021', '27 Mar, 2021'
-    # print(kline)
+    # log.info(kline)
 
-    """ Process 1: polling telegram commands """
+    """ Thread 1: polling telegram commands """
     if app_args['is_telegram_bot_on']:
-        tg_process = Process(target=tg_bot_polling)
-        tg_process.start()
-        running_processes.append(tg_process)
+        tg_thread = Thread(target=tg_bot_polling)
+        tg_thread.daemon = True
+        tg_thread.start()
         log.info('Telegram process started.')
 
-    """ Process 2: running scheduled tasks """
+    """ Thread 2: running scheduled tasks """
     if app_args['is_schedule_tasks_on']:
         # run them once at first to initialize data
         test_10s()
         # schedule.every().day.do(test_10s)
         schedule.every().second.do(test_10s)
-        sch_process = Process(target=run_scheduled_tasks)
-        sch_process.start()
-        running_processes.append(sch_process)
+        sch_thread = Thread(target=run_scheduled_tasks)
+        sch_thread.start()
         log.info('Schedule task process started.')
 
     if app_args['is_data_stream_on']:
@@ -271,5 +273,5 @@ if __name__ == "__main__":
     signal.signal(signal.SIGQUIT, gracfully_close_handler)
     signal.signal(signal.SIGTERM, gracfully_close_handler)
     log.info('Application started.')
-    forever = threading.Event()
+    forever = Event()
     forever.wait()
