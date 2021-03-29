@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2463f17-bfa3-4697-b16f-e860190e5aa8" name="Default Changelist" comment="" />
+    <list default="true" id="c2463f17-bfa3-4697-b16f-e860190e5aa8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/algo.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +19,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1qHfwux3NMoKkPkjKhQtTyYVZ5Y" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -22,6 +31,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RunManager" selected="Python.algo">
@@ -92,37 +102,159 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="c2463f17-bfa3-4697-b16f-e860190e5aa8" name="Default Changelist" comment="" />
+      <changelist id="" name="SMA" comment="" />
       <created>1616741677153</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616741677153</updated>
     </task>
+    <task id="LOCAL-00001" summary="disable websocket temp">
+      <created>1616770570127</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1616770570127</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update README.md">
+      <created>1616771986390</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1616771986390</updated>
+    </task>
+    <task id="LOCAL-00003" summary="SMA">
+      <created>1616915996336</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1616915996336</updated>
+    </task>
+    <task id="LOCAL-00004" summary="SMA, schedule tasks, app args">
+      <created>1616923595170</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1616923595170</updated>
+    </task>
+    <task id="LOCAL-00005" summary="SMA, schedule tasks, app args">
+      <created>1616924044040</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1616924044040</updated>
+    </task>
+    <task id="LOCAL-00006" summary="SMA, schedule tasks, app args">
+      <created>1616924082156</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1616924082156</updated>
+    </task>
+    <task id="LOCAL-00007" summary="handle tg exception">
+      <created>1616924453939</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1616924453939</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added control for telegram bot &amp; update README.md">
+      <created>1616924748790</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616924748790</updated>
+    </task>
+    <task id="LOCAL-00009" summary="update README.md">
+      <created>1616924825209</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1616924825209</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="disable websocket temp" />
+    <MESSAGE value="SMA" />
+    <MESSAGE value="SMA, schedule tasks, app args" />
+    <MESSAGE value="handle tg exception" />
+    <MESSAGE value="added control for telegram bot &amp; update README.md" />
+    <MESSAGE value="update README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="update README.md" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="297" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog" timestamp="1616742372103">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="485" y="297" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog/0.0.1280.800@0.0.1280.800" timestamp="1616742372103" />
-    <state width="1259" height="305" key="GridCell.Tab.0.bottom" timestamp="1616769720430">
+    <state x="273" y="2" key="CommitChangelistDialog2" timestamp="1616924824700">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="273" y="2" key="CommitChangelistDialog2/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616924824700" />
+    <state x="70" y="102" width="1080" height="600" key="DiffContextDialog" timestamp="1616923555751">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="70" y="102" width="1080" height="600" key="DiffContextDialog/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616923555751" />
+    <state width="1259" height="178" key="GridCell.Tab.0.bottom" timestamp="1616927691193">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="1259" height="202" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1616757279766" />
-    <state width="1259" height="305" key="GridCell.Tab.0.bottom/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616769720430" />
-    <state width="1259" height="305" key="GridCell.Tab.0.center" timestamp="1616769720416">
+    <state width="1259" height="178" key="GridCell.Tab.0.bottom/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616927691193" />
+    <state width="1259" height="178" key="GridCell.Tab.0.center" timestamp="1616927691191">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="1259" height="202" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1616757279765" />
-    <state width="1259" height="305" key="GridCell.Tab.0.center/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616769720416" />
-    <state width="1259" height="305" key="GridCell.Tab.0.left" timestamp="1616769720415">
+    <state width="1259" height="178" key="GridCell.Tab.0.center/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616927691191" />
+    <state width="1259" height="178" key="GridCell.Tab.0.left" timestamp="1616927691189">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="1259" height="202" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1616757279764" />
-    <state width="1259" height="305" key="GridCell.Tab.0.left/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616769720415" />
-    <state width="1259" height="305" key="GridCell.Tab.0.right" timestamp="1616769720417">
+    <state width="1259" height="178" key="GridCell.Tab.0.left/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616927691189" />
+    <state width="1259" height="178" key="GridCell.Tab.0.right" timestamp="1616927691192">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="1259" height="202" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1616757279766" />
-    <state width="1259" height="305" key="GridCell.Tab.0.right/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616769720417" />
+    <state width="1259" height="178" key="GridCell.Tab.0.right/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616927691192" />
+    <state width="1259" height="263" key="GridCell.Tab.1.bottom" timestamp="1616812853512">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1259" height="263" key="GridCell.Tab.1.bottom/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616812853512" />
+    <state width="1259" height="263" key="GridCell.Tab.1.center" timestamp="1616812853507">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1259" height="263" key="GridCell.Tab.1.center/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616812853507" />
+    <state width="1259" height="263" key="GridCell.Tab.1.left" timestamp="1616812853506">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1259" height="263" key="GridCell.Tab.1.left/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616812853506" />
+    <state width="1259" height="263" key="GridCell.Tab.1.right" timestamp="1616812853510">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1259" height="263" key="GridCell.Tab.1.right/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616812853509" />
+    <state x="128" y="69" key="MergeDialog" timestamp="1616920769469">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="128" y="69" key="MergeDialog/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616920769469" />
+    <state x="412" y="118" key="RollbackChangesDialog" timestamp="1616923862631">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="412" y="118" key="RollbackChangesDialog/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616923862631" />
+    <state x="240" y="128" key="Vcs.Push.Dialog.v2" timestamp="1616924826699">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="240" y="128" key="Vcs.Push.Dialog.v2/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616924826699" />
+    <state x="1280" y="-317" width="1079" height="1814" maximized="true" key="dock-window-1" timestamp="1616927143397">
+      <screen x="1280" y="-361" width="1080" height="1920" />
+    </state>
+    <state x="1280" y="-317" width="1079" height="1814" maximized="true" key="dock-window-1/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616927143397" />
+    <state x="16" y="166" key="vcs.ApplyPatchDifferentiatedDialog" timestamp="1616920642402">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="16" y="166" key="vcs.ApplyPatchDifferentiatedDialog/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616920642402" />
   </component>
 </project>
