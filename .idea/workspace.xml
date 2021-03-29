@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2463f17-bfa3-4697-b16f-e860190e5aa8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/algo.py" beforeDir="false" afterPath="$PROJECT_DIR$/algo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616924825209</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="put all env config in a dictionary">
+      <created>1616988620387</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1616988620387</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -182,7 +188,8 @@
     <MESSAGE value="handle tg exception" />
     <MESSAGE value="added control for telegram bot &amp; update README.md" />
     <MESSAGE value="update README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="update README.md" />
+    <MESSAGE value="put all env config in a dictionary" />
+    <option name="LAST_COMMIT_MESSAGE" value="put all env config in a dictionary" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -192,9 +199,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="485" y="297" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog/0.0.1280.800@0.0.1280.800" timestamp="1616742372103" />
-    <state x="273" y="2" key="CommitChangelistDialog2" timestamp="1616924824700">
+    <state x="273" y="2" key="CommitChangelistDialog2" timestamp="1616991896864">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state x="273" y="2" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1616991896864" />
     <state x="273" y="2" key="CommitChangelistDialog2/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616924824700" />
     <state x="70" y="102" width="1080" height="600" key="DiffContextDialog" timestamp="1616923555751">
       <screen x="0" y="0" width="1280" height="800" />
@@ -244,9 +252,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="412" y="118" key="RollbackChangesDialog/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616923862631" />
-    <state x="240" y="128" key="Vcs.Push.Dialog.v2" timestamp="1616924826699">
+    <state x="240" y="128" key="Vcs.Push.Dialog.v2" timestamp="1616988622833">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state x="240" y="128" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1616988622833" />
     <state x="240" y="128" key="Vcs.Push.Dialog.v2/1280.-361.1080.1920/0.0.1280.800@0.0.1280.800" timestamp="1616924826699" />
     <state x="1280" y="-317" width="1079" height="1814" maximized="true" key="dock-window-1" timestamp="1616927143397">
       <screen x="1280" y="-361" width="1080" height="1920" />

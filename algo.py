@@ -3,11 +3,13 @@ Paper Trading - https://testnet.binance.vision/
 Guide - https://algotrading101.com/learn/binance-python-api-guide/
 
 """
+import logging as log
 import signal
 import sys
 import threading
 import time
 from datetime import datetime
+from multiprocessing import Process
 
 import schedule
 import telebot
@@ -32,6 +34,8 @@ binance_client = Client(paper_api_key, paper_api_secret)
 binance_client.API_URL = binance_api_endpoint
 btc_price = {'error': False}
 conn_key = None
+running_processes = []
+log.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s', level=log.INFO)
 
 """
 Application params
@@ -42,7 +46,6 @@ app_args = {
     'is_schedule_tasks_on': True,
     'is_telegram_bot_on': True
 }
-
 """
 Telegram bot commands
 """
@@ -185,10 +188,16 @@ def btcusdt_tick_handler(msg):
 
 
 def gracfully_close_handler(signal, frame):
-    bsm.stop_socket(conn_key)  # stop websocket
-    reactor.stop()  # properly terminate WebSocket
-    print('Gracefully terminated.')
-    sys.exit(0)
+    try:
+        bsm.stop_socket(conn_key)  # stop websocket
+        reactor.stop()  # properly terminate WebSocket
+        print('Gracefully terminated.')
+    except NameError:
+        print('Gracefully terminated. (Data stream socket is not started)')
+    finally:
+        for p in running_processes:
+            p.terminate()
+        sys.exit(0)
 
 
 def get_avg_close(binance_klines):
@@ -223,7 +232,7 @@ def init_params(args):
             if val not in TRUE_ALIAS:
                 app_args['is_telegram_bot_on'] = False
 
-    print('App Args: ', app_args)
+    log.info('App Args: {}'.format(app_args))
 
 
 if __name__ == "__main__":
@@ -231,31 +240,36 @@ if __name__ == "__main__":
     kline = binance_client.get_historical_klines('BTCUSDT', Client.KLINE_INTERVAL_1DAY, '10 day ago UTC')
     # 10 day ago UTC
     # '17 Mar, 2021', '27 Mar, 2021'
-    print(kline)
-    print_balance_btc_usdt()
+    # print(kline)
 
-    """ Thread 1: polling telegram commands """
+    """ Process 1: polling telegram commands """
     if app_args['is_telegram_bot_on']:
-        tg_thread = threading.Thread(target=tg_bot_polling)
-        tg_thread.start()
+        tg_process = Process(target=tg_bot_polling)
+        tg_process.start()
+        running_processes.append(tg_process)
+        log.info('Telegram process started.')
 
-    """ Thread 2: running scheduled tasks """
+    """ Process 2: running scheduled tasks """
     if app_args['is_schedule_tasks_on']:
         # run them once at first to initialize data
         test_10s()
         # schedule.every().day.do(test_10s)
         schedule.every().second.do(test_10s)
-        sch_thread = threading.Thread(target=run_scheduled_tasks)
-        sch_thread.start()
+        sch_process = Process(target=run_scheduled_tasks)
+        sch_process.start()
+        running_processes.append(sch_process)
+        log.info('Schedule task process started.')
 
     if app_args['is_data_stream_on']:
         bsm = BinanceSocketManager(binance_client)
         conn_key = bsm.start_symbol_ticker_socket('BTCUSDT', btcusdt_tick_handler)
+        log.info('Data streaming started.')
         bsm.start()
 
     # Handle system signals
     signal.signal(signal.SIGINT, gracfully_close_handler)
     signal.signal(signal.SIGQUIT, gracfully_close_handler)
     signal.signal(signal.SIGTERM, gracfully_close_handler)
+    log.info('Application started.')
     forever = threading.Event()
     forever.wait()
