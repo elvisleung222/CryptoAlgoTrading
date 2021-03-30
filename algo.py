@@ -7,7 +7,6 @@ import logging as log
 import signal
 import sys
 import time
-from datetime import datetime
 from threading import Thread, Event
 
 import schedule
@@ -19,17 +18,18 @@ from twisted.internet import reactor
 """
 Configurations
 """
+# TODO: externalize to env variables
 tg_notification_group_id = -427619077
-binance_api_endpoint = 'https://testnet.binance.vision/api'
-paper_api_key = 'zLIvCfgCOjjLFxIFVpTw9kdXDSTAdK9h3vZtwpSJ4YOY1kxpAjW1RagzBJ147qYV'
-paper_api_secret = 'n4FC7mYB4095D8c81Xn3XHmlDhImztFYXYqiexPziuX1hCsPLoeHAeCsq68EWhy5'
+binance_api_endpoint = 'https://api.binance.com/api'
+api_key = 'wr0rFGK0Gbl2pHp4qB0xANsp6p7AeWgqlKaBAVFIok8adIy4hqB7IKIHeWoanZlx'
+api_secret = '6TKiIPzMmcEjePab9cNfnZkrpOZdjms4os5siS6fA2t0shwKDsmeyyE0JE8CXg0l'
 telebot_token = '1785575987:AAFadtnwM8WCIAJ8Xxz7MgJs3ZhU0QOmXfc'
 
 """
 Initialization
 """
 tg_bot = telebot.TeleBot(telebot_token)
-binance_client = Client(paper_api_key, paper_api_secret)
+binance_client = Client(api_key, api_secret)
 binance_client.API_URL = binance_api_endpoint
 btc_price = {'error': False}
 conn_key = None
@@ -42,8 +42,21 @@ app_args = {
     'is_data_stream_on': True,
     'is_print_stream_value': True,
     'is_schedule_tasks_on': True,
-    'is_telegram_bot_on': True
+    'is_telegram_bot_on': True,
+    'is_binance_trading_enabled': False
 }
+
+"""
+Strategy variables
+"""
+trading_signal = {
+    'sma': 0,
+    'rsi': 0
+}
+ma_5 = -1.0
+ma_10 = -1.0
+btc_usdt_price = -1.0
+
 """
 Telegram bot commands
 """
@@ -54,11 +67,21 @@ def tg_bot_polling():
     tg_bot.polling()
 
 
+def notify_buy_signal(reason):
+    notify('$$$$ BUY signal at {} by {} $$$$'.format(btc_usdt_price, reason))
+    log.info('$$$$ BUY signal at {} by {} $$$$'.format(btc_usdt_price, reason))
+
+
+def notify_sell_signal(reason):
+    notify('$$$$ SELL signal at {} by {} $$$$'.format(btc_usdt_price, reason))
+    log.info('$$$$ SELL signal at {} by {} $$$$'.format(btc_usdt_price, reason))
+
+
 def notify(msg):
     try:
         api_reply = tg_bot.send_message(tg_notification_group_id, msg)
         if api_reply is not None:
-            log.info('Reply sent.')
+            log.info('Message sent.')
     except Exception as e:
         log.info('Telegram Error: {}'.format(e))
 
@@ -99,13 +122,65 @@ def trade(message):
         notify('Error: {}'.format(e))
 
 
+@tg_bot.message_handler(commands=['snapshot'])
+def sys_snapshot(message):
+    log.info('Received command: ' + message.text)
+    notify(generate_sys_snapshot_str())
+
+
 """
 Functions
 """
 
 
-def test_10s():
-    log.info('Scheduled job executed')
+def generate_sys_snapshot_str():
+    def gen_dict_str(dictionary: dict):
+        s = '\n'
+        for k in dictionary.keys():
+            s += '- {}: {}\n'.format(k, dictionary[k])
+        return s
+
+    str = '**** System Snapshot ****\n'
+    str += 'app_args: {}\n'.format(gen_dict_str(app_args))
+    str += 'ma_5: {}\n'.format(ma_5)
+    str += 'ma_10: {}\n'.format(ma_10)
+    str += 'btc_usdt_price: {}\n'.format(btc_usdt_price)
+    str += 'trading_signal: {}\n'.format(gen_dict_str(trading_signal))
+
+    return str
+
+
+def calculate_sma():
+    global ma_5
+    global ma_10
+    log.info('Started to calculate SMA.')
+    kline_5 = binance_client.get_historical_klines('BTCUSDT', Client.KLINE_INTERVAL_1DAY, '5 days ago UTC')
+    kline_10 = binance_client.get_historical_klines('BTCUSDT', Client.KLINE_INTERVAL_1DAY, '10 days ago UTC')
+    ma_5 = get_avg_close(kline_5)
+    log.info('5 days MA saved: {}.'.format(ma_5))
+    ma_10 = get_avg_close(kline_10)
+    log.info('10 days MA saved: {}.'.format(ma_10))
+    log.info('Finish SMA calculation.')
+
+
+def fetch_btc_usdt_price():
+    global btc_usdt_price
+    # last 1 minute
+    klines = binance_client.get_klines(symbol='BTCUSDT', interval=Client.KLINE_INTERVAL_1MINUTE, limit=1)
+    close = klines[0][4]
+    btc_usdt_price = float(close)
+    log.debug('BTC/USDT price fetched: {}.'.format(close))
+
+
+def trading_strategy():
+    global trading_signal
+    if btc_usdt_price > ma_5 > ma_10 and trading_signal['sma'] < 1:
+        trading_signal['sma'] = 1
+        notify_buy_signal('Golden Cross')
+
+    if btc_usdt_price < ma_5 < ma_10 and trading_signal['sma'] > -1:
+        trading_signal['sma'] = -1
+        notify_sell_signal('Death Cross')
 
 
 def run_scheduled_tasks():
@@ -174,6 +249,7 @@ def sell_asset_to_usdt(symbol, quantity):
             type='MARKET',
             quantity=quantity)
         log.info('Order Filled.')
+        # TODO: log more info for better traceability
     except Exception as e:
         log.info('Error: Currency: {}, {}'.format(symbol, e))
 
@@ -200,15 +276,12 @@ def gracfully_close_handler(signal, frame):
         log.info('Gracefully terminated, Data stream socket is not started.')
     finally:
         log.info('Exit Application.')
+        notify('Exit Application.')
         sys.exit(0)
 
 
 def get_avg_close(binance_klines):
     closes = [float(x[4]) for x in binance_klines]
-    for x in binance_klines:
-        ts = datetime.fromtimestamp(x[0] / 1000)
-        log.info(ts)
-    log.info(closes)
     return sum(closes) / len(closes)
 
 
@@ -234,16 +307,17 @@ def init_params(args):
             val = arg[1].upper()
             if val not in TRUE_ALIAS:
                 app_args['is_telegram_bot_on'] = False
+        elif '--binance-trading-enable' in arg:
+            val = arg[1].upper()
+            if val in TRUE_ALIAS:
+                app_args['is_binance_trading_enabled'] = True
 
     log.info('App Args: {}'.format(app_args))
 
 
 if __name__ == "__main__":
+    # Initialize application arguments
     init_params(sys.argv[1:])
-    kline = binance_client.get_historical_klines('BTCUSDT', Client.KLINE_INTERVAL_1DAY, '10 day ago UTC')
-    # 10 day ago UTC
-    # '17 Mar, 2021', '27 Mar, 2021'
-    # log.info(kline)
 
     """ Thread 1: polling telegram commands """
     if app_args['is_telegram_bot_on']:
@@ -255,14 +329,21 @@ if __name__ == "__main__":
     """ Thread 2: running scheduled tasks """
     if app_args['is_schedule_tasks_on']:
         # run them once at first to initialize data
-        test_10s()
-        # schedule.every().day.do(test_10s)
-        schedule.every().second.do(test_10s)
+        log.info('Initializing mandatory data...')
+        fetch_btc_usdt_price()
+        calculate_sma()
+        trading_strategy()
+        log.info('Finished data initialization.')
+        schedule.every().minute.do(calculate_sma)
+        schedule.every().minute.do(fetch_btc_usdt_price)
+        schedule.every().minute.do(trading_strategy)
         sch_thread = Thread(target=run_scheduled_tasks)
+        sch_thread.daemon = True
         sch_thread.start()
         log.info('Schedule task process started.')
 
     if app_args['is_data_stream_on']:
+        # TODO: start this in another thread
         bsm = BinanceSocketManager(binance_client)
         conn_key = bsm.start_symbol_ticker_socket('BTCUSDT', btcusdt_tick_handler)
         log.info('Data streaming started.')
@@ -273,5 +354,6 @@ if __name__ == "__main__":
     signal.signal(signal.SIGQUIT, gracfully_close_handler)
     signal.signal(signal.SIGTERM, gracfully_close_handler)
     log.info('Application started.')
+    notify('Application started.')
     forever = Event()
     forever.wait()
